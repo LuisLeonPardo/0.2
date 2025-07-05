@@ -7,6 +7,7 @@ interface ProductCardProps {
   onClick: (productName: string) => void;
 }
 
+// Tarjeta individual para mostrar un producto en el grid
 const ProductCard: React.FC<ProductCardProps> = ({ name, id, onClick }) => {
   return (
     <div 

@@ -2,7 +2,7 @@
 
 ## 📋 Descripción del Proyecto
 
-FrontPOSw es una aplicación web moderna de gestión de inventario y punto de venta desarrollada con React, TypeScript y Tailwind CSS. El sistema está diseñado para pequeñas y medianas empresas que necesitan una solución completa para gestionar productos, inventario, ventas y órdenes de compra.
+FrontPOSw es una aplicación moderna de gestión de inventario y punto de venta. Cuenta con un frontend en React y un backend construido con **FastAPI** para manejar la autenticación y las operaciones principales. El sistema está pensado para pequeñas y medianas empresas que necesitan una solución integral para productos, inventario, ventas y órdenes de compra.
 
 ### 🎯 Características Principales
 
@@ -20,6 +20,8 @@ FrontPOSw es una aplicación web moderna de gestión de inventario y punto de ve
 - Node.js (versión 18 o superior)
 - npm o yarn
 - Git
+- Python 3.10 o superior
+- pip
 
 ### Pasos de Instalación
 
@@ -29,17 +31,29 @@ FrontPOSw es una aplicación web moderna de gestión de inventario y punto de ve
    cd FrontPOSw
    ```
 
-2. **Instalar dependencias**
+2. **Instalar dependencias del frontend**
    ```bash
    npm install
    ```
 
-3. **Ejecutar en modo desarrollo**
+3. **Instalar dependencias del backend**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   cd ..
+   ```
+
+4. **Ejecutar frontend en modo desarrollo**
    ```bash
    npm run dev
    ```
 
-4. **Acceder a la aplicación**
+5. **Iniciar servidor FastAPI**
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+6. **Acceder a la aplicación**
    - Abrir navegador en `http://localhost:5173`
 
 ### Scripts Disponibles
@@ -74,6 +88,12 @@ src/
 ├── main.tsx            # Punto de entrada de la aplicación
 ├── index.css           # Estilos globales
 └── vite-env.d.ts       # Tipos de Vite
+backend/
+├── main.py             # Entrada de la API FastAPI
+├── routers/            # Rutas de la aplicación
+├── models/             # Modelos ORM
+├── schemas/            # Esquemas Pydantic
+└── crud/               # Operaciones de base de datos
 ```
 
 ## 📱 Componentes Detallados
@@ -503,4 +523,4 @@ Para soporte técnico o consultas sobre el proyecto, contactar al equipo de desa
 
 ---
 
-**Nota**: Este es un proyecto frontend que requiere integración con un backend para funcionalidad completa. Todas las funcionalidades de datos están simuladas con datos mock para demostración.
+**Nota**: Actualmente el repositorio incluye un backend básico con FastAPI para autenticación. Algunas funcionalidades siguen usando datos simulados mientras se completan las demás APIs.

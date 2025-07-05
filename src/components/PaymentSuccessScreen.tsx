@@ -14,7 +14,8 @@ interface PaymentSuccessScreenProps {
   }>;
 }
 
-const PaymentSuccessScreen: React.FC<PaymentSuccessScreenProps> = ({ 
+// Pantalla de confirmación mostrada al completar el pago
+const PaymentSuccessScreen: React.FC<PaymentSuccessScreenProps> = ({
   isOpen, 
   onNewOrder, 
   paymentMethod, 
@@ -25,6 +26,7 @@ const PaymentSuccessScreen: React.FC<PaymentSuccessScreenProps> = ({
   const [showCheckmark, setShowCheckmark] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Maneja las animaciones cuando se muestra la pantalla
   useEffect(() => {
     if (isOpen) {
       // Trigger animations

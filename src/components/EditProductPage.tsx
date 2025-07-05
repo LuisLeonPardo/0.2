@@ -17,6 +17,7 @@ interface VariantData {
   };
 }
 
+// Página para editar un producto existente
 const EditProductPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -124,10 +125,12 @@ const EditProductPage: React.FC = () => {
     }
   }, [id]);
 
+  // Actualiza los valores del formulario
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Selecciona o deselecciona una categoría
   const handleCategoryToggle = (category: string) => {
     setSelectedCategories(prev => 
       prev.includes(category) 
@@ -136,6 +139,7 @@ const EditProductPage: React.FC = () => {
     );
   };
 
+  // Activa o desactiva una variante del producto
   const handleVariantToggle = (variantType: string) => {
     setVariants(prev => ({
       ...prev,
@@ -147,6 +151,7 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Cambia la selección de un valor de variante
   const handleVariantValueToggle = (variantType: string, valueId: string) => {
     setVariants(prev => ({
       ...prev,
@@ -159,6 +164,7 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Añade un valor nuevo a la variante
   const handleAddVariantValue = (variantType: string) => {
     const newValue = variants[variantType].newValue.trim();
     if (newValue) {
@@ -174,6 +180,7 @@ const EditProductPage: React.FC = () => {
     }
   };
 
+  // Gestiona el input para crear un nuevo valor
   const handleNewValueChange = (variantType: string, value: string) => {
     setVariants(prev => ({
       ...prev,
@@ -184,6 +191,7 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Guarda los cambios de la variante
   const handleSaveVariant = (variantType: string) => {
     setVariants(prev => ({
       ...prev,
@@ -194,6 +202,7 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Cancela y limpia los cambios de la variante
   const handleCancelVariant = (variantType: string) => {
     setVariants(prev => ({
       ...prev,
@@ -207,6 +216,7 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Devuelve una lista de valores seleccionados
   const getSelectedValues = (variantType: string) => {
     return variants[variantType].values
       .filter(value => value.selected)
@@ -214,6 +224,7 @@ const EditProductPage: React.FC = () => {
       .join(', ');
   };
 
+  // Activa/desactiva las variantes extra del panel
   const handleMoreVariantsToggle = (variantType: string) => {
     setVariants(prev => ({
       ...prev,
@@ -224,16 +235,19 @@ const EditProductPage: React.FC = () => {
     }));
   };
 
+  // Guarda la configuración del panel de más variantes
   const handleSaveMoreVariants = () => {
     setShowMoreVariantsPanel(false);
   };
 
+  // Envía los cambios del producto (simulado)
   const handleSave = () => {
     // Here you could add validation logic and API call to update the product
     console.log('Updating product with ID:', id, formData);
     navigate('/inventory');
   };
 
+  // Elimina el producto tras confirmación
   const handleDelete = () => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este producto? Esta acción no se puede deshacer.')) {
       // Here you would make an API call to delete the product

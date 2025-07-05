@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Package, Home, Plus, Archive, Brain, Settings, LogOut, User } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 
+// Menú lateral principal de navegación
 const SideMenu: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,10 +21,12 @@ const SideMenu: React.FC = () => {
     { name: 'Configuraciones', icon: Settings, path: '/profile', description: 'Ajustes' }
   ];
 
+  // Cambia de ruta utilizando React Router
   const handleNavigation = (path: string) => {
     navigate(path);
   };
 
+  // Elimina el token y redirige al login
   const handleLogout = () => {
     localStorage.removeItem('token'); // Limpia el token
     navigate('/login');

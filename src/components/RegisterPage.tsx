@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 
+// Formulario de registro de nuevos usuarios
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -17,10 +18,12 @@ const RegisterPage: React.FC = () => {
     acceptTerms: false
   });
 
+  // Maneja los cambios en los campos del formulario
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Envía los datos de registro al backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

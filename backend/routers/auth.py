@@ -7,9 +7,11 @@ from models import user as user_model
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from auth_utils import verify_password, create_access_token, decode_access_token
 
+# Enrutador para operaciones de autenticación
 router = APIRouter()
 
 # Conexión a la base de datos
+# Dependencia que proporciona una sesión de base de datos
 def get_db():
     db = SessionLocal()
     try:
@@ -18,6 +20,7 @@ def get_db():
         db.close()
 
 # Registro de usuario
+# Registro de usuario nuevo
 @router.post("/auth/register", response_model=UserOut)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     existing = db.query(user_model.User).filter(user_model.User.email == user.email).first()
@@ -29,6 +32,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 # Login de usuario (OAuth2 compatible con Swagger)
+# Login de usuario via formulario OAuth2
 @router.post("/auth/login", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     db_user = db.query(user_model.User).filter(user_model.User.email == form_data.username).first()
@@ -39,6 +43,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": token, "token_type": "bearer"}
 
 # Función para obtener el usuario actual desde el token
+# Obtiene el usuario autenticado a partir del token
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     payload = decode_access_token(token)
     if payload is None:
@@ -50,6 +55,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 # Ruta protegida que devuelve el perfil del usuario autenticado
+# Devuelve el perfil del usuario autenticado
 @router.get("/auth/me", response_model=UserOut)
 def read_users_me(current_user: user_model.User = Depends(get_current_user)):
     return current_user
