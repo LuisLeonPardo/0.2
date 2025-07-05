@@ -12,6 +12,7 @@ interface OCRItem {
   selected: boolean;
 }
 
+// Muestra y permite corregir los resultados del OCR
 const OCRResultPage: React.FC = () => {
   const navigate = useNavigate();
   
@@ -79,6 +80,7 @@ const OCRResultPage: React.FC = () => {
     'Nuevo producto'
   ];
 
+  // Marca o desmarca todos los ítems obtenidos
   const handleSelectAll = () => {
     const allSelected = ocrItems.every(item => item.selected);
     setOcrItems(items => 
@@ -86,6 +88,7 @@ const OCRResultPage: React.FC = () => {
     );
   };
 
+  // Selecciona individualmente un ítem
   const handleItemSelect = (id: number) => {
     setOcrItems(items =>
       items.map(item =>
@@ -94,6 +97,7 @@ const OCRResultPage: React.FC = () => {
     );
   };
 
+  // Modifica las propiedades de un ítem
   const handleItemChange = (id: number, field: keyof OCRItem, value: string | number) => {
     setOcrItems(items =>
       items.map(item =>
@@ -102,11 +106,13 @@ const OCRResultPage: React.FC = () => {
     );
   };
 
+  // Guarda los ítems seleccionados y navega a Smart Inventory
   const handleSaveChanges = () => {
     // Navigate to Smart Inventory page to show the purchase order manager
     navigate('/smart-inventory');
   };
 
+  // Simula la exportación de un CSV
   const handleExportCSV = () => {
     // Simular exportación CSV
     console.log('Exportando CSV...');

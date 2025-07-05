@@ -9,12 +9,15 @@ interface User {
 
 const UserContext = createContext<{ user: User | null; isLoading: boolean }>({ user: null, isLoading: true });
 
+// Hook de conveniencia para acceder al contexto de usuario
 export const useUser = () => useContext(UserContext);
 
+// Proveedor que carga el usuario actual desde el backend y lo expone por contexto
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Al montar, consultar el perfil para mantener la sesión
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {

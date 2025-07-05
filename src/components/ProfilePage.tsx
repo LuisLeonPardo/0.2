@@ -55,6 +55,7 @@ interface PaymentCard {
   isDefault: boolean;
 }
 
+// Página de ajustes y datos del usuario
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('profile');
@@ -168,10 +169,12 @@ const ProfilePage: React.FC = () => {
     { id: 'support', name: 'Soporte y Ayuda', icon: HelpCircle }
   ];
 
+  // Actualiza un campo simple del estado de perfil
   const handleInputChange = (field: string, value: any) => {
     setProfileData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Maneja cambios en estructuras anidadas del perfil
   const handleNestedInputChange = (parent: string, field: string, subfield: string, value: any) => {
     setProfileData(prev => ({
       ...prev,
@@ -185,27 +188,33 @@ const ProfilePage: React.FC = () => {
     }));
   };
 
+  // Actualiza los datos del cambio de contraseña
   const handlePasswordChange = (field: string, value: string) => {
     setPasswordData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Muestra u oculta el campo de contraseña indicado
   const togglePasswordVisibility = (field: 'current' | 'new' | 'confirm') => {
     setShowPassword(prev => ({ ...prev, [field]: !prev[field] }));
   };
 
+  // Simula la persistencia de los cambios en el perfil
   const handleSaveChanges = () => {
     // Simulate save
     console.log('Guardando cambios...', profileData);
   };
 
+  // Cierra una sesión activa (placeholder)
   const handleCloseSession = (sessionId: string) => {
     console.log('Cerrando sesión:', sessionId);
   };
 
+  // Abre el modal para administrar tarjetas
   const handleOpenPaymentModal = () => {
     setShowPaymentModal(true);
   };
 
+  // Cierra el modal y limpia el formulario de tarjeta
   const handleClosePaymentModal = () => {
     setShowPaymentModal(false);
     setShowAddCardForm(false);
@@ -219,6 +228,7 @@ const ProfilePage: React.FC = () => {
     });
   };
 
+  // Marca una tarjeta como predeterminada
   const handleSetDefaultCard = (cardId: string) => {
     setPaymentCards(cards =>
       cards.map(card => ({
@@ -228,6 +238,7 @@ const ProfilePage: React.FC = () => {
     );
   };
 
+  // Elimina una tarjeta del listado
   const handleDeleteCard = (cardId: string) => {
     if (paymentCards.length <= 1) {
       alert('Debes tener al menos una tarjeta registrada');
@@ -249,6 +260,7 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  // Carga una tarjeta existente para edición
   const handleEditCard = (card: PaymentCard) => {
     setEditingCard(card);
     setNewCard({
@@ -261,6 +273,7 @@ const ProfilePage: React.FC = () => {
     setShowAddCardForm(true);
   };
 
+  // Guarda una tarjeta nueva o editada en memoria
   const handleSaveCard = () => {
     if (!newCard.holderName || !newCard.expiryMonth || !newCard.expiryYear) {
       alert('Por favor completa todos los campos requeridos');
@@ -316,6 +329,7 @@ const ProfilePage: React.FC = () => {
     });
   };
 
+  // Devuelve un ícono representativo según el tipo de tarjeta
   const getCardIcon = (type: string) => {
     switch (type) {
       case 'visa':
@@ -329,6 +343,7 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  // Colores auxiliares para los estados de las facturas
   const getInvoiceStatusColor = (status: string) => {
     switch (status) {
       case 'Pagado':
@@ -342,6 +357,7 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  // Encabezado de la página con avatar y nombre
   const renderProfileHeader = () => (
     <div className="bg-bg-surface rounded-lg shadow-sm border border-divider p-6 mb-6">
       <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
@@ -372,6 +388,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Sección de datos personales
   const renderPersonalData = () => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -444,6 +461,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Sección para cambiar contraseña y seguridad
   const renderSecurity = () => (
     <div className="space-y-6">
       {/* Password Change */}
@@ -577,6 +595,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Ajustes de preferencias de usuario
   const renderPreferences = () => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -646,6 +665,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Configuración de notificaciones
   const renderNotifications = () => (
     <div className="space-y-6">
       {/* Notification Types */}
@@ -709,6 +729,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Gestión del plan y facturación
   const renderBilling = () => (
     <div className="space-y-6">
       {/* Current Plan */}
@@ -802,6 +823,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Información de soporte y ayuda
   const renderSupport = () => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -826,6 +848,7 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 
+  // Renderiza el contenido según la sección activa
   const renderContent = () => {
     switch (activeSection) {
       case 'profile':

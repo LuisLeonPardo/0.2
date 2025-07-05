@@ -15,6 +15,7 @@ interface SalesDrawerProps {
   productName?: string;
 }
 
+// Panel lateral que muestra el carrito de la venta
 const SalesDrawer: React.FC<SalesDrawerProps> = ({ isOpen, onClose, onNavigateToPayment, productName }) => {
   const [items, setItems] = useState<SalesItem[]>([
     { id: 1, name: productName || 'Cabinet with Doors', quantity: 3, price: 18.00 },
@@ -27,6 +28,7 @@ const SalesDrawer: React.FC<SalesDrawerProps> = ({ isOpen, onClose, onNavigateTo
   const [customAmount, setCustomAmount] = useState('');
   const [internalNote, setInternalNote] = useState('');
 
+  // Modifica la cantidad de un artículo en el carrito
   const updateQuantity = (id: number, change: number) => {
     setItems(items.map(item => 
       item.id === id 
@@ -39,6 +41,7 @@ const SalesDrawer: React.FC<SalesDrawerProps> = ({ isOpen, onClose, onNavigateTo
   const tax = subtotal * 0.15; // 15% tax
   const total = subtotal + tax;
 
+  // Navega a la pantalla de pago con el total actual
   const handlePaymentClick = () => {
     onNavigateToPayment(total);
   };

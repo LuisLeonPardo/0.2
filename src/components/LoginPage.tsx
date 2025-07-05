@@ -3,15 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 
+// Formulario de inicio de sesión
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
+  // Actualiza los campos de correo y contraseña
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Envía las credenciales al backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -51,6 +54,7 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  // Placeholder para login social
   const handleSocialLogin = (provider: string) => {
     console.log(`Login with ${provider}`);
     navigate('/dashboard');

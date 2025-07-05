@@ -18,6 +18,7 @@ interface PurchaseOrder {
   items: OrderItem[];
 }
 
+// Gestión de escaneo OCR y órdenes de compra
 const SmartInventoryPage: React.FC = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -101,6 +102,7 @@ const SmartInventoryPage: React.FC = () => {
   });
 
   // File upload handlers
+  // Valida y procesa un archivo subido
   const handleFileUpload = (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
@@ -128,30 +130,36 @@ const SmartInventoryPage: React.FC = () => {
     }, 2000);
   };
 
+  // Efectos visuales al arrastrar un archivo
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(true);
   };
 
+  // Quita los estilos cuando el archivo sale de la zona
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
   };
 
+  // Gestiona la caída del archivo en la zona
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
     handleFileUpload(e.dataTransfer.files);
   };
 
+  // Maneja el input de archivos oculto
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleFileUpload(e.target.files);
   };
 
+  // Dispara el selector de archivos manual
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
 
+  // Abre la modal para visualizar o editar una orden
   const handleOpenOrderModal = (order: PurchaseOrder) => {
     setSelectedOrder(order);
     setEditedOrder({ ...order, items: [...order.items] });
@@ -159,6 +167,7 @@ const SmartInventoryPage: React.FC = () => {
     setIsEditing(false);
   };
 
+  // Cierra la modal de orden
   const handleCloseOrderModal = () => {
     setShowOrderModal(false);
     setSelectedOrder(null);
@@ -166,10 +175,12 @@ const SmartInventoryPage: React.FC = () => {
     setIsEditing(false);
   };
 
+  // Habilita el modo edición dentro de la modal
   const handleEditOrder = () => {
     setIsEditing(true);
   };
 
+  // Guarda los cambios realizados en la orden
   const handleSaveOrder = () => {
     if (editedOrder) {
       // Update the order in the orders array
@@ -183,6 +194,7 @@ const SmartInventoryPage: React.FC = () => {
     }
   };
 
+  // Cancela la edición de la orden
   const handleCancelEdit = () => {
     if (selectedOrder) {
       setEditedOrder({ ...selectedOrder, items: [...selectedOrder.items] });
@@ -190,12 +202,14 @@ const SmartInventoryPage: React.FC = () => {
     setIsEditing(false);
   };
 
+  // Actualiza un campo de la orden editada
   const handleOrderFieldChange = (field: keyof PurchaseOrder, value: any) => {
     if (editedOrder) {
       setEditedOrder(prev => prev ? { ...prev, [field]: value } : null);
     }
   };
 
+  // Actualiza un producto dentro de la orden
   const handleItemChange = (itemId: number, field: keyof OrderItem, value: any) => {
     if (editedOrder) {
       setEditedOrder(prev => {
@@ -210,6 +224,7 @@ const SmartInventoryPage: React.FC = () => {
     }
   };
 
+  // Suma el total de la orden editada
   const calculateTotal = () => {
     if (!editedOrder) return 0;
     return editedOrder.items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
@@ -223,11 +238,13 @@ const SmartInventoryPage: React.FC = () => {
     }
   }, [editedOrder?.items, isEditing]);
 
+  // Elimina una orden existente
   const handleDeleteOrder = (orderId: number) => {
     setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
     handleCloseOrderModal();
   };
 
+  // Crea una nueva orden con los datos del formulario
   const handleNewOrderSubmit = () => {
     const total = newOrder.items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
     const order: PurchaseOrder = {
@@ -248,6 +265,7 @@ const SmartInventoryPage: React.FC = () => {
     setShowNewOrderForm(false);
   };
 
+  // Agrega una línea nueva a la orden por crear
   const addNewOrderItem = () => {
     const newId = Math.max(...newOrder.items.map(item => item.id)) + 1;
     setNewOrder(prev => ({
@@ -256,6 +274,7 @@ const SmartInventoryPage: React.FC = () => {
     }));
   };
 
+  // Elimina una línea del formulario de nueva orden
   const removeNewOrderItem = (itemId: number) => {
     if (newOrder.items.length > 1) {
       setNewOrder(prev => ({
@@ -265,6 +284,7 @@ const SmartInventoryPage: React.FC = () => {
     }
   };
 
+  // Actualiza un campo de un ítem en la nueva orden
   const updateNewOrderItem = (itemId: number, field: keyof OrderItem, value: any) => {
     setNewOrder(prev => ({
       ...prev,
@@ -274,6 +294,7 @@ const SmartInventoryPage: React.FC = () => {
     }));
   };
 
+  // Devuelve colores según el estado de la orden
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Pendiente':

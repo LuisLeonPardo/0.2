@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
 from database import Base
 
+# Modelo ORM de usuarios registrados
 class User(Base):
     __tablename__ = "users"
 

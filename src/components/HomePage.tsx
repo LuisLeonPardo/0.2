@@ -9,6 +9,7 @@ interface HomePageProps {
   searchTerm?: string;
 }
 
+// Componente principal del tablero de ventas
 const HomePage: React.FC<HomePageProps> = ({ searchTerm: externalSearchTerm = '' }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
@@ -44,6 +45,7 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm: externalSearchTerm = ''
   ];
 
   // Filter products based on search term
+  // Genera la lista filtrada de productos según la búsqueda
   const filteredProducts = useMemo(() => {
     if (!activeSearchTerm.trim()) {
       return products;
@@ -54,30 +56,36 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm: externalSearchTerm = ''
     );
   }, [activeSearchTerm]);
 
+  // Abre el drawer de ventas al seleccionar un producto
   const handleProductClick = (productName: string) => {
     setSelectedProduct(productName);
     setIsDrawerOpen(true);
   };
 
+  // Cierra el panel lateral de ventas
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
   };
 
+  // Abre la pantalla de pago con el total calculado
   const handleNavigateToPayment = (total: number) => {
     setPaymentTotal(total);
     setIsPaymentOpen(true);
   };
 
+  // Regresa del flujo de pago al drawer
   const handleBackFromPayment = () => {
     setIsPaymentOpen(false);
   };
 
+  // Muestra la pantalla de éxito al finalizar el pago
   const handlePaymentSuccess = (method: string) => {
     setPaymentMethod(method);
     setIsPaymentOpen(false);
     setIsSuccessOpen(true);
   };
 
+  // Reinicia todos los estados para comenzar una nueva orden
   const handleNewOrder = () => {
     // Reset all states to start fresh
     setIsSuccessOpen(false);
@@ -95,6 +103,7 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm: externalSearchTerm = ''
     ]);
   };
 
+  // Actualiza el término de búsqueda local
   const handleLocalSearchChange = (value: string) => {
     setLocalSearchTerm(value);
   };

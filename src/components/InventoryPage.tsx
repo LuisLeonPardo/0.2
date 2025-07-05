@@ -12,6 +12,7 @@ interface InventoryItem {
   image?: string;
 }
 
+// Módulo de gestión de inventario de productos
 const InventoryPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -33,6 +34,7 @@ const InventoryPage: React.FC = () => {
 
   const categories = ['all', 'Muebles', 'Textiles', 'Iluminación', 'Electrónicos'];
 
+  // Marca o desmarca todos los ítems de la lista
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
       setSelectedItems(inventoryItems.map(item => item.id));
@@ -41,6 +43,7 @@ const InventoryPage: React.FC = () => {
     }
   };
 
+  // Selecciona un único item de la tabla
   const handleSelectItem = (id: number, checked: boolean) => {
     if (checked) {
       setSelectedItems([...selectedItems, id]);
@@ -49,6 +52,7 @@ const InventoryPage: React.FC = () => {
     }
   };
 
+  // Navega a la página de edición del producto
   const handleEditProduct = (id: number) => {
     navigate(`/edit-product/${id}`);
   };

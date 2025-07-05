@@ -10,6 +10,7 @@ interface PaymentScreenProps {
 
 type PaymentMethod = 'card' | 'wallet' | 'crypto' | 'cash';
 
+// Pantalla que permite elegir el método de pago y confirmar la compra
 const PaymentScreen: React.FC<PaymentScreenProps> = ({ isOpen, onBack, onPaymentSuccess, total }) => {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [formData, setFormData] = useState({
@@ -24,10 +25,12 @@ const PaymentScreen: React.FC<PaymentScreenProps> = ({ isOpen, onBack, onPayment
     changeFor: ''
   });
 
+  // Actualiza los valores del formulario según el método seleccionado
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  // Valida que la información de pago esté completa
   const isFormValid = () => {
     switch (selectedMethod) {
       case 'card':
@@ -43,6 +46,7 @@ const PaymentScreen: React.FC<PaymentScreenProps> = ({ isOpen, onBack, onPayment
     }
   };
 
+  // Devuelve el nombre legible del método de pago
   const getPaymentMethodName = (method: PaymentMethod | null) => {
     switch (method) {
       case 'card':
@@ -58,6 +62,7 @@ const PaymentScreen: React.FC<PaymentScreenProps> = ({ isOpen, onBack, onPayment
     }
   };
 
+  // Ejecuta el callback cuando el pago es válido
   const handleConfirmPayment = () => {
     if (isFormValid() && selectedMethod) {
       onPaymentSuccess(getPaymentMethodName(selectedMethod));
